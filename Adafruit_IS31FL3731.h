@@ -2,8 +2,8 @@
 #define _ADAFRUIT_IS31FL3731_H_
 
 #include <Adafruit_GFX.h>
+#include <Adafruit_I2CDevice.h>
 #include <Arduino.h>
-#include <Wire.h>
 
 #define ISSI_ADDR_DEFAULT 0x74
 
@@ -32,7 +32,7 @@
 class Adafruit_IS31FL3731 : public Adafruit_GFX {
 public:
   Adafruit_IS31FL3731(uint8_t x = 16, uint8_t y = 9);
-  bool begin(uint8_t addr = ISSI_ADDR_DEFAULT);
+  bool begin(uint8_t addr = ISSI_ADDR_DEFAULT, TwoWire *theWire = &Wire);
   void drawPixel(int16_t x, int16_t y, uint16_t color);
   void clear(void);
 
@@ -42,11 +42,13 @@ public:
   void displayFrame(uint8_t frame);
 
 protected:
-  void selectBank(uint8_t bank);
-  void writeRegister8(uint8_t bank, uint8_t reg, uint8_t data);
+  bool selectBank(uint8_t bank);
+  bool writeRegister8(uint8_t bank, uint8_t reg, uint8_t data);
   uint8_t readRegister8(uint8_t bank, uint8_t reg);
-  uint8_t _i2caddr, ///< The I2C address we expect to find the chip
-      _frame;       ///< The frame (of 8) we are currently addressing
+  uint8_t _frame; ///< The frame (of 8) we are currently addressing
+
+private:
+  Adafruit_I2CDevice *_i2c_dev = NULL;
 };
 
 /**************************************************************************/
