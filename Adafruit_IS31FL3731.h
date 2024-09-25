@@ -5,7 +5,7 @@
 #include <Adafruit_I2CDevice.h>
 #include <Arduino.h>
 
-#define ISSI_ADDR_DEFAULT 0x75
+#define ISSI_ADDR_DEFAULT 0x74
 
 #define ISSI_REG_CONFIG 0x00
 #define ISSI_REG_CONFIG_PICTUREMODE 0x00
