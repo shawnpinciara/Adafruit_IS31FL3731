@@ -53,6 +53,15 @@ bool Adafruit_IS31FL3731::begin(uint8_t addr, TwoWire *theWire) {
     return false;
   }
 
+  //prevent flickering of screen when powered
+  for(int16_t xx=0; xx<15;xx++)
+  {
+	  for(int16_t yy=0;yy<8;yy++)
+	  {
+		  drawPixel(xx,yy,(int16_t)0x00);
+	  }
+  }
+
   _i2c_dev->setSpeed(400000);
   _frame = 0;
 
