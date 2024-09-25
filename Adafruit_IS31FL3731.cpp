@@ -27,6 +27,13 @@ Adafruit_IS31FL3731::Adafruit_IS31FL3731(uint8_t width, uint8_t height)
 /**************************************************************************/
 Adafruit_IS31FL3731_Wing::Adafruit_IS31FL3731_Wing(void)
     : Adafruit_IS31FL3731(15, 7) {}
+/**************************************************************************/
+/*!
+    @brief Constructor for Pimoroni version (11x7 LEDs)
+*/
+/**************************************************************************/
+Adafruit_IS31FL3731_11x7::Adafruit_IS31FL3731_11x7(void)
+    : Adafruit_IS31FL3731(11, 7) {}
 
 /**************************************************************************/
 /*!
@@ -150,6 +157,40 @@ void Adafruit_IS31FL3731_Wing::drawPixel(int16_t x, int16_t y, uint16_t color) {
   if (color > 255)
     color = 255; // PWM 8bit max
 
+  setLEDPWM(x + y * 16, color, _frame);
+  return;
+}
+
+
+void Adafruit_IS31FL3731_11x7::drawPixel(int16_t x, int16_t y, uint16_t color) {
+  // check rotation, move pixel around if necessary
+  switch (getRotation()) {
+  case 1:
+    _swap_int16_t(x, y);
+    x = 16 - x - 1;
+    break;
+  case 2:
+    x = 16 - x - 1;
+    y = 9 - y - 1;
+    break;
+  case 3:
+    _swap_int16_t(x, y);
+    y = 9 - y - 1;
+    break;
+  }
+
+  // if ((x < 0) || (x >= 16))
+  //   return;
+  // if ((y < 0) || (y >= 9))
+  //   return;
+  if (color > 255)
+    color = 255; // PWM 8bit max
+//added jack
+    if (y>5) {
+      x = x+8;
+      y = y-6;
+     }
+//added jack end
   setLEDPWM(x + y * 16, color, _frame);
   return;
 }

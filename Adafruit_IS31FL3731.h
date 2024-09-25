@@ -5,7 +5,7 @@
 #include <Adafruit_I2CDevice.h>
 #include <Arduino.h>
 
-#define ISSI_ADDR_DEFAULT 0x74
+#define ISSI_ADDR_DEFAULT 0x75
 
 #define ISSI_REG_CONFIG 0x00
 #define ISSI_REG_CONFIG_PICTUREMODE 0x00
@@ -59,6 +59,18 @@ private:
 class Adafruit_IS31FL3731_Wing : public Adafruit_IS31FL3731 {
 public:
   Adafruit_IS31FL3731_Wing(void);
+  void drawPixel(int16_t x, int16_t y, uint16_t color);
+};
+
+/**************************************************************************/
+/*!
+    @brief Constructor for Pimoroni 11x7 IS31FL3731 version
+*/
+/**************************************************************************/
+
+class Adafruit_IS31FL3731_11x7 : public Adafruit_IS31FL3731 {
+public:
+  Adafruit_IS31FL3731_11x7(void);
   void drawPixel(int16_t x, int16_t y, uint16_t color);
 };
 
